@@ -1,2 +1,1 @@
-# roboTrader
-Robo Trader em python
+# python_django
