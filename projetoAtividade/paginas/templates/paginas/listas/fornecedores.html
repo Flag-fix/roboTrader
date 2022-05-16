@@ -1,0 +1,39 @@
+{% extends 'paginas/modelo.html' %}
+
+{% load static %}
+
+{% block conteudo %}
+
+<h1 class="mt-4">Cadastro do Sistema</h1>
+<hr>
+
+<table>
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Documentos</th>
+            <th>Telefone</th>
+            <th>Opções</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for obj in object_list %}
+        <tr>
+            <td>{{obj.nome}}</td>
+            <td>{{obj.documento}}</td>
+            <td>{{obj.telefone}}</td>
+            <td>
+                <a href="" class="btn btn-warning">Editar</a>
+                <a href="" class="btn btn-danger">Excluir</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="100%">Nenhum registro encontrado</td>
+        </tr>
+
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

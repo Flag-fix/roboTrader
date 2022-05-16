@@ -1,0 +1,48 @@
+{% extends 'paginas/modelo.html' %}
+
+{% load static %}
+
+{% block conteudo %}
+
+<h1 class="mt-4">Lista de Pessoas</h1>
+<a href="{% url 'cadastrar-pessoa' %}" class="btn btn-primary float-right ms-5">Cadastrar Pessoa</a>
+<hr>
+<table class="table table-striped">
+
+    <thead>
+        <tr>
+            <th>
+                
+            </th>
+            <th>Data Nascimento</th>
+            <th>Email</th>
+            <th>Senha</th>
+            <th>Cidade</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for obj in object_list %}
+            <tr>
+                <td>{{obj.nome_completo}}</td>
+                <td>{{obj.nascimento}}</td>
+                <td>{{obj.email}}</td>
+                <td>{{obj.senha}}</td>
+                <td>{{obj.cidade}}</td>
+                <td>
+                    <a href="{% url 'editar-pessoa' obj.pk %}" class="btn btn-warning">
+                        Editar</a>
+                    <a href="{% url 'excluir-pessoa' obj.pk %}" class="btn btn-danger">
+                        Excluir</a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="100%">Nenhum Registro Encontrado!</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
+
+{% endblock %}
