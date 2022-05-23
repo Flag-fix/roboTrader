@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Atividade',
+            name='Equipamento',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('titulo', models.CharField(help_text='Digite o título da demanda', max_length=100, verbose_name='Título da demanda')),
@@ -27,15 +27,15 @@ class Migration(migrations.Migration):
             name='Cidade',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('nome', models.CharField(max_length=100, verbose_name='Nome da cidade')),
+                ('descricao', models.CharField(max_length=100, verbose_name='Nome da cidade')),
                 ('estado', models.CharField(choices=[('SP', 'São Paulo'), ('PR', 'Paraná')], max_length=2)),
             ],
         ),
         migrations.CreateModel(
-            name='Setor',
+            name='OrdemServico',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('nome', models.CharField(max_length=100, verbose_name='Nome do setor')),
+                ('descricao', models.CharField(max_length=100, verbose_name='Nome do setor')),
                 ('area_atuacao', models.CharField(max_length=100, verbose_name='Área de atuação')),
                 ('email', models.CharField(max_length=100, verbose_name='Email')),
             ],
@@ -44,7 +44,7 @@ class Migration(migrations.Migration):
             name='Pessoa',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('nome_completo', models.CharField(help_text='Digite seu nome completo', max_length=50, verbose_name='Nome da pessoa')),
+                ('descricao', models.CharField(help_text='Digite seu descricao completo', max_length=50, verbose_name='Nome da pessoa')),
                 ('nascimento', models.DateField(verbose_name='Data de nascimento')),
                 ('email', models.CharField(max_length=100, verbose_name='Email')),
                 ('senha', models.CharField(max_length=100, verbose_name='Senha')),
@@ -52,7 +52,7 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='Demanda',
+            name='TipoEquipamento',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('titulo', models.CharField(help_text='Digite o título da demanda', max_length=50, verbose_name='Título da demanda')),

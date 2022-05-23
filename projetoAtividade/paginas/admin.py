@@ -1,10 +1,10 @@
 from django.contrib import admin
-from .models import Cidade,Atividade,Demanda,Pessoa,Setor
+from .models import Cidade,Equipamento,TipoEquipamento,Pessoa,OrdemServico
 
 admin.site.register(Cidade)
-admin.site.register(Atividade)
-admin.site.register(Demanda)
+admin.site.register(Equipamento)
+admin.site.register(TipoEquipamento)
 admin.site.register(Pessoa)
-admin.site.register(Setor)
+admin.site.register(OrdemServico)
 
 # Register your models here.

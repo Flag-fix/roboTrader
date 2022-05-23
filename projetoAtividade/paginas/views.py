@@ -3,28 +3,28 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
 
-from .models import Cidade, Pessoa, Setor, Atividade, Demanda
+from .models import Cidade, Pessoa, OrdemServico, Equipamento, TipoEquipamento
 
 class index(TemplateView):
     template_name = 'paginas/index.html'
 
 class PessoaCreate(CreateView):
     model = Pessoa
-    fields = ['nome_completo', 'nascimento', 'email', 'senha', 'cidade']
+    fields = ['descricao', 'nascimento', 'email', 'senha', 'cidade']
     template_name = 'paginas/form.html'
     success_url = reverse_lazy('listar-pessoa')
 
 
 class CidadeCreate(CreateView):
     model = Cidade
-    fields = ['nome', 'estado']
+    fields = ['descricao', 'estado']
     template_name = 'paginas/form.html'
     success_url = reverse_lazy('index')
 
 
 class SetorCreate(CreateView):
-    model = Setor
-    fields = ['nome',
+    model = OrdemServico
+    fields = ['descricao',
               'area_atuacao',
               'email']
     template_name = 'paginas/form.html'
@@ -32,7 +32,7 @@ class SetorCreate(CreateView):
 
 
 class AtividadeCreate(CreateView):
-    model = Atividade
+    model = Equipamento
     fields = ['titulo',
               'data_entrega',
               'status',
@@ -44,7 +44,7 @@ class AtividadeCreate(CreateView):
 
 
 class DemandaCreate(CreateView):
-    model = Demanda
+    model = TipoEquipamento
     fields = ['titulo',
               'data_inicial',
               'data_final',
@@ -56,21 +56,21 @@ class DemandaCreate(CreateView):
 
 class PessoaUpdate(UpdateView):
     model = Pessoa
-    fields = ['nome_completo', 'nascimento', 'email', 'senha', 'cidade']
+    fields = ['descricao', 'nascimento', 'email', 'senha', 'cidade']
     template_name = 'paginas/form.html'
     success_url = reverse_lazy('listar-pessoa')
 
 
 class CidadeUpdate(UpdateView):
     model = Cidade
-    fields = ['nome', 'estado']
+    fields = ['descricao', 'estado']
     template_name = 'paginas/form.html'
     success_url = reverse_lazy('index')
 
 
 class SetorUpdate(UpdateView):
-    model = Setor
-    fields = ['nome',
+    model = OrdemServico
+    fields = ['descricao',
               'area_atuacao',
               'email']
     template_name = 'paginas/form.html'
@@ -78,7 +78,7 @@ class SetorUpdate(UpdateView):
 
 
 class AtividadeUpdate(UpdateView):
-    model = Atividade
+    model = Equipamento
     fields = ['titulo',
               'data_entrega',
               'status',
@@ -90,7 +90,7 @@ class AtividadeUpdate(UpdateView):
 
 
 class DemandaUpdate(UpdateView):
-    model = Demanda
+    model = TipoEquipamento
     fields = ['titulo',
               'data_inicial',
               'data_final',
@@ -101,19 +101,19 @@ class DemandaUpdate(UpdateView):
 
 #=##############
 class DemandaDelete(DeleteView):
-    model = Demanda
+    model = TipoEquipamento
     template_name = 'cadastros/form-delete.html'
     sucess_url = reverse_lazy('index')
     
 
 class AtividadeDelete(DeleteView):
-    model = Atividade
+    model = Equipamento
     template_name = 'paginas/form-delete.html'
     success_url = reverse_lazy('index')
 
 
 class SetorDelete(DeleteView):
-    model = Setor
+    model = OrdemServico
     template_name = 'paginas/form-delete.html'
     success_url = reverse_lazy('index')
 
