@@ -2,37 +2,41 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
+from braces.views import GroupRequiredMixin
 
-from .models import Cidade, Pessoa, OrdemServico, Equipamento, TipoEquipamento
+
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+from .models import Cidade, Pessoa, Setor, Atividade, Demanda
 
 class index(TemplateView):
     template_name = 'paginas/index.html'
 
-class PessoaCreate(CreateView):
+class PessoaCreate(LoginRequiredMixin, CreateView):
     model = Pessoa
-    fields = ['descricao', 'nascimento', 'email', 'senha', 'cidade']
+    fields = ['nome_completo', 'nascimento', 'cidade']
     template_name = 'paginas/form.html'
     success_url = reverse_lazy('listar-pessoa')
 
 
-class CidadeCreate(CreateView):
+class CidadeCreate(LoginRequiredMixin, CreateView):
     model = Cidade
-    fields = ['descricao', 'estado']
+    fields = ['nome', 'estado']
     template_name = 'paginas/form.html'
     success_url = reverse_lazy('index')
 
 
-class SetorCreate(CreateView):
-    model = OrdemServico
-    fields = ['descricao',
+class SetorCreate(LoginRequiredMixin, CreateView):
+    model = Setor
+    fields = ['nome',
               'area_atuacao',
               'email']
     template_name = 'paginas/form.html'
     success_url = reverse_lazy('index')
 
 
-class AtividadeCreate(CreateView):
-    model = Equipamento
+class AtividadeCreate(LoginRequiredMixin, CreateView):
+    model = Atividade
     fields = ['titulo',
               'data_entrega',
               'status',
@@ -43,8 +47,8 @@ class AtividadeCreate(CreateView):
     success_url = reverse_lazy('index')
 
 
-class DemandaCreate(CreateView):
-    model = TipoEquipamento
+class DemandaCreate(LoginRequiredMixin, CreateView):
+    model = Demanda
     fields = ['titulo',
               'data_inicial',
               'data_final',
@@ -54,31 +58,31 @@ class DemandaCreate(CreateView):
     success_url = reverse_lazy('index')
 
 
-class PessoaUpdate(UpdateView):
+class PessoaUpdate(LoginRequiredMixin, GroupRequiredMixin,  UpdateView):
     model = Pessoa
-    fields = ['descricao', 'nascimento', 'email', 'senha', 'cidade']
+    fields = ['nome_completo', 'nascimento','cidade']
     template_name = 'paginas/form.html'
     success_url = reverse_lazy('listar-pessoa')
+    group_required = u"Administrador"
 
-
-class CidadeUpdate(UpdateView):
+class CidadeUpdate(LoginRequiredMixin, GroupRequiredMixin, UpdateView):
     model = Cidade
-    fields = ['descricao', 'estado']
+    fields = ['nome', 'estado']
     template_name = 'paginas/form.html'
     success_url = reverse_lazy('index')
+    group_required = u"Administrador"
 
-
-class SetorUpdate(UpdateView):
-    model = OrdemServico
-    fields = ['descricao',
+class SetorUpdate(LoginRequiredMixin, GroupRequiredMixin,  UpdateView):
+    model = Setor
+    fields = ['nome',
               'area_atuacao',
               'email']
     template_name = 'paginas/form.html'
     success_url = reverse_lazy('index')
+    group_required = u"Administrador"
 
-
-class AtividadeUpdate(UpdateView):
-    model = Equipamento
+class AtividadeUpdate(LoginRequiredMixin, GroupRequiredMixin, UpdateView):
+    model = Atividade
     fields = ['titulo',
               'data_entrega',
               'status',
@@ -87,10 +91,10 @@ class AtividadeUpdate(UpdateView):
               'setor']
     template_name = 'paginas/form.html'
     success_url = reverse_lazy('index')
+    group_required = u"Administrador"
 
-
-class DemandaUpdate(UpdateView):
-    model = TipoEquipamento
+class DemandaUpdate(LoginRequiredMixin, GroupRequiredMixin, UpdateView):
+    model = Demanda
     fields = ['titulo',
               'data_inicial',
               'data_final',
@@ -98,38 +102,41 @@ class DemandaUpdate(UpdateView):
               'lista_de_atividades']
     template_name = 'paginas/form.html'
     success_url = reverse_lazy('index')
-
+    group_required = u"Administrador"
 #=##############
-class DemandaDelete(DeleteView):
-    model = TipoEquipamento
+
+
+class DemandaDelete(LoginRequiredMixin, GroupRequiredMixin,  DeleteView):
+    model = Demanda
     template_name = 'cadastros/form-delete.html'
     sucess_url = reverse_lazy('index')
-    
+    group_required = u"Administrador"
 
-class AtividadeDelete(DeleteView):
-    model = Equipamento
+class AtividadeDelete(LoginRequiredMixin, GroupRequiredMixin,  DeleteView):
+    model = Atividade
     template_name = 'paginas/form-delete.html'
     success_url = reverse_lazy('index')
+    group_required = u"Administrador"
 
-
-class SetorDelete(DeleteView):
-    model = OrdemServico
+class SetorDelete(LoginRequiredMixin, GroupRequiredMixin,  DeleteView):
+    model = Setor
     template_name = 'paginas/form-delete.html'
     success_url = reverse_lazy('index')
+    group_required = u"Administrador"
 
-
-class CidadeDelete(DeleteView):
+class CidadeDelete(LoginRequiredMixin, GroupRequiredMixin,  DeleteView):
     model = Cidade
     template_name = 'paginas/form-delete.html'
     success_url = reverse_lazy('index')
+    group_required = u"Administrador"
 
-
-class PessoaDelete(DeleteView):
+class PessoaDelete(LoginRequiredMixin, GroupRequiredMixin, DeleteView):
     model = Pessoa
     template_name = 'paginas/form-delete.html'
     success_url = reverse_lazy('listar-pessoa')
+    group_required = u"Administrador"
 
-
-class PessoaList(ListView):
+class PessoaList(LoginRequiredMixin, GroupRequiredMixin,  ListView):
     model = Pessoa
     template_name = 'paginas/listas/pessoa.html'
+    group_required = u"Administrador"
