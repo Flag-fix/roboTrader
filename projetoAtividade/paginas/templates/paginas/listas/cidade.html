@@ -1,0 +1,45 @@
+{% extends 'paginas/modelo.html' %}
+
+{% load static %}
+
+{% block conteudo %}
+
+<h1 class="mt-4">Lista de Cidades</h1>
+<a href="{% url 'cadastrar-cidade' %}" class="btn btn-primary float-right ms-5">Cadastrar cidade</a>
+<hr>
+<table class="table table-striped">
+
+    <thead>
+        <tr>
+            <th>
+                
+            </th>
+            <th>Nome</th>
+            <th>Estado</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for obj in object_list %}
+            <tr>
+                <td>{{obj.nome}}</td>
+                <td>{{obj.estado}}</td>
+
+
+                <td>
+                    <a href="{% url 'editar-cidade' obj.pk %}" class="btn btn-warning">
+                        Editar</a>
+                    <a href="{% url 'excluir-cidade' obj.pk %}" class="btn btn-danger">
+                        Excluir</a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="100%">Nenhum Registro Encontrado!</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
+
+{% endblock %}

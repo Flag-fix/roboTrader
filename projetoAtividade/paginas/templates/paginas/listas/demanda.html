@@ -1,0 +1,50 @@
+{% extends 'paginas/modelo.html' %}
+
+{% load static %}
+
+{% block conteudo %}
+
+<h1 class="mt-4">Lista de Demanda</h1>
+<a href="{% url 'cadastrar-demanda' %}" class="btn btn-primary float-right ms-5">Cadastrar Demanda</a>
+<hr>
+<table class="table table-striped">
+
+    <thead>
+        <tr>
+            <th>
+                
+            </th>
+            <th>Título</th>
+            <th>Data Inicial</th>
+            <th>Data Final</th>
+            <th>OG</th>
+            <th>Lista de Atividades</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for obj in object_list %}
+            <tr>
+                <td>{{obj.titulo}}</td>
+                <td>{{obj.data_inicial}}</td>
+                <td>{{obj.data_final}}</td>
+                <td>{{obj.og}}</td>
+                <td>{{obj.lista_de_atividades}}</td>
+
+                <td>
+                    <a href="{% url 'editar-demanda' obj.pk %}" class="btn btn-warning">
+                        Editar</a>
+                    <a href="{% url 'excluir-demanda' obj.pk %}" class="btn btn-danger">
+                        Excluir</a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="100%">Nenhum Registro Encontrado!</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
+
+{% endblock %}

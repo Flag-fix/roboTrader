@@ -1,0 +1,46 @@
+{% extends 'paginas/modelo.html' %}
+
+{% load static %}
+
+{% block conteudo %}
+
+<h1 class="mt-4">Lista de Setores</h1>
+<a href="{% url 'cadastrar-setor' %}" class="btn btn-primary float-right ms-5">Cadastrar Setor</a>
+<hr>
+<table class="table table-striped">
+
+    <thead>
+        <tr>
+            <th>
+                
+            </th>
+            <th>Nome</th>
+            <th>Area Atuacao</th>
+            <th>E-mail</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for obj in object_list %}
+            <tr>
+                <td>{{obj.nome}}</td>
+                <td>{{obj.area_atuacao}}</td>
+                <td>{{obj.email}}</td>
+
+                <td>
+                    <a href="{% url 'editar-setor' obj.pk %}" class="btn btn-warning">
+                        Editar</a>
+                    <a href="{% url 'excluir-setor' obj.pk %}" class="btn btn-danger">
+                        Excluir</a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="100%">Nenhum Registro Encontrado!</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
+
+{% endblock %}
