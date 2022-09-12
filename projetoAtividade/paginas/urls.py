@@ -2,7 +2,7 @@ from django.urls import path
 from .views import index, OrdemServicoCreate, CidadeCreate, PessoaCreate, TipoCreate, EquipamentoCreate
 from .views import OrdemServicoUpdate, CidadeUpdate, PessoaUpdate, TipoUpdate, EquipamentoUpdate
 from .views import OrdemServicoDelete, CidadeDelete, PessoaDelete, TipoDelete, EquipamentoDelete
-from .views import OrdemServicoList, CidadeList, PessoaList, TipoList, EquipamentoList
+from .views import OrdemServicoList, CidadeList, PessoaList, TipoList, EquipamentoList, OrdemServicoUsuarioList
 
 urlpatterns = [
 
@@ -28,6 +28,7 @@ urlpatterns = [
 
     path('listar/cidade/', CidadeList.as_view(), name='listar-cidade'),
     path('listar/ordemServico/', OrdemServicoList.as_view(), name='listar-ordemServico'),
+    path('listar/minhas-ordem-servico/', OrdemServicoUsuarioList.as_view(), name='listar-ordemServico-usuario'),
     path('listar/pessoa/', PessoaList.as_view(), name='listar-pessoa'),
     path('listar/tipo/', TipoList.as_view(), name='listar-tipo'),
     path('listar/equipamento/', EquipamentoList.as_view(), name='listar-equipamento'),

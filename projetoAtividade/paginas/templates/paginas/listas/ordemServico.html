@@ -11,13 +11,12 @@
 
     <thead>
         <tr>
-            <th>
-                
-            </th>
             <th>Descricao</th>
             <th>Data Inicial</th>
+            <th>Data Fechamento</th>
             <th>Equipamento</th>
             <th>Status</th>
+            <th>Opções</th>
         </tr>
     </thead>
 
@@ -25,7 +24,7 @@
         {% for obj in object_list %}
             <tr>
                 <td>{{obj.descricao}}</td>
-                <td>{{obj.data_final}}</td>
+                <td>{{obj.data_inicial}}</td>
                 <td>{{obj.data_final}}</td>
                 <td>{{obj.equipamento}}</td>
                 <td>{{obj.status}}</td>

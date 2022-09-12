@@ -19,17 +19,17 @@ class PessoaCreate(LoginRequiredMixin, CreateView):
     template_name = 'paginas/form.html'
     success_url = reverse_lazy('listar-pessoa')
 
-    def form_valid(self, form):
-        # form.instance.nome_do_atributo = valor
-        form.instance.usuario = self.request.user
-
-        # só tem no create view
-
-        # validando os dados do form antes de criar o objeto(nao está no banco)
-        url = super().form_valid(form)
-
-        # aqui vc tem o objeto (dados inseridos no banco)
-        return url
+    # def form_valid(self, form):
+    #     # form.instance.nome_do_atributo = valor
+    #     form.instance.usuario = self.request.user
+    #
+    #     # só tem no create view
+    #
+    #     # validando os dados do form antes de criar o objeto(nao está no banco)
+    #     url = super().form_valid(form)
+    #
+    #     # aqui vc tem o objeto (dados inseridos no banco)
+    #     return url
 
 
 class CidadeCreate(LoginRequiredMixin, CreateView):
@@ -38,22 +38,11 @@ class CidadeCreate(LoginRequiredMixin, CreateView):
     template_name = 'paginas/form.html'
     success_url = reverse_lazy('listar-cidade')
 
-    def form_valid(self, form):
-        # form.instance.nome_do_atributo = valor
-        form.instance.usuario = self.request.user
-
-        # só tem no create view
-
-        # validando os dados do form antes de criar o objeto(nao está no banco)
-        url = super().form_valid(form)
-
-        # aqui vc tem o objeto (dados inseridos no banco)
-        return url
 
 
 class OrdemServicoCreate(LoginRequiredMixin, CreateView):
     model = OrdemServico
-    fields = ['descricao', 'data_inicial', 'data_final', 'equipamento', 'status']
+    fields = ['descricao', 'data_inicial', 'equipamento', 'status']
     template_name = 'paginas/form.html'
     success_url = reverse_lazy('listar-ordemServico')
 
@@ -69,12 +58,6 @@ class OrdemServicoCreate(LoginRequiredMixin, CreateView):
         # aqui vc tem o objeto (dados inseridos no banco)
         return url
 
-    def get_context_data(self, *args, **kwargs):
-        dados = super().get_context_data(*args, *kwargs)
-        dados["form"].fields["equipamento"].queryset = Equipamento.objects.filter(usuario=self.request.user)
-
-        return dados
-
 
 class EquipamentoCreate(LoginRequiredMixin, CreateView):
     model = Equipamento
@@ -82,23 +65,6 @@ class EquipamentoCreate(LoginRequiredMixin, CreateView):
     template_name = 'paginas/form.html'
     success_url = reverse_lazy('listar-equipamento')
 
-    def form_valid(self, form):
-        # form.instance.nome_do_atributo = valor
-        form.instance.usuario = self.request.user
-
-        # só tem no create view
-
-        # validando os dados do form antes de criar o objeto(nao está no banco)
-        url = super().form_valid(form)
-
-        # aqui vc tem o objeto (dados inseridos no banco)
-        return url
-
-    def get_context_data(self, *args, **kwargs):
-        dados = super().get_context_data(*args, *kwargs)
-        dados["form"].fields["tipo_equipamento"].queryset = Tipo.objects.filter(usuario=self.request.user)
-
-        return dados
 
 
 class TipoCreate(LoginRequiredMixin, CreateView):
@@ -107,22 +73,6 @@ class TipoCreate(LoginRequiredMixin, CreateView):
     template_name = 'paginas/form.html'
     success_url = reverse_lazy('listar-tipo')
 
-    def form_valid(self, form):
-        # form.instance.nome_do_atributo = valor
-        form.instance.usuario = self.request.user
-
-        # só tem no create view
-
-        # validando os dados do form antes de criar o objeto(nao está no banco)
-        url = super().form_valid(form)
-
-        # aqui vc tem o objeto (dados inseridos no banco)
-        # Como por exemplo:
-        # self.object.codigo = hash(self.object.pk)
-        # aí você tem que salvar o objeto de novo
-        # self.object.save()
-
-        return url
 
 
 class PessoaUpdate(LoginRequiredMixin, GroupRequiredMixin, UpdateView):
@@ -132,11 +82,6 @@ class PessoaUpdate(LoginRequiredMixin, GroupRequiredMixin, UpdateView):
     success_url = reverse_lazy('listar-pessoa')
     group_required = u"Administrador"
 
-    def get_object(self, queryset=None):
-        self.object = get_object_or_404(
-            Pessoa, pk=self.kwargs['pk'], usuario=self.request.user)
-        return self.object
-
 
 class CidadeUpdate(LoginRequiredMixin, GroupRequiredMixin, UpdateView):
     model = Cidade
@@ -145,11 +90,6 @@ class CidadeUpdate(LoginRequiredMixin, GroupRequiredMixin, UpdateView):
     success_url = reverse_lazy('listar-cidade')
     group_required = u"Administrador"
 
-    def get_object(self, queryset=None):
-        self.object = get_object_or_404(
-            Cidade, pk=self.kwargs['pk'], usuario=self.request.user)
-        return self.object
-
 
 class OrdemServicoUpdate(LoginRequiredMixin, GroupRequiredMixin, UpdateView):
     model = OrdemServico
@@ -157,6 +97,13 @@ class OrdemServicoUpdate(LoginRequiredMixin, GroupRequiredMixin, UpdateView):
     template_name = 'paginas/form.html'
     success_url = reverse_lazy('listar-ordemServico')
     group_required = u"Administrador"
+
+
+class OrdemServicoUsuarioUpdate(LoginRequiredMixin, UpdateView):
+    model = OrdemServico
+    fields = ['descricao', 'data_inicial', 'data_final', 'equipamento', 'status']
+    template_name = 'paginas/form.html'
+    success_url = reverse_lazy('listar-ordemServico')
 
     def get_object(self, queryset=None):
         self.object = get_object_or_404(
@@ -175,16 +122,6 @@ class EquipamentoUpdate(LoginRequiredMixin, GroupRequiredMixin, UpdateView):
     success_url = reverse_lazy('listar-equipamento')
     group_required = u"Administrador"
 
-    def get_object(self, queryset=None):
-        self.object = get_object_or_404(
-            Equipamento, pk=self.kwargs['pk'], usuario=self.request.user)
-        return self.object
-
-    def get_context_data(self, *args, **kwargs):
-        dados = super().get_context_data(*args, *kwargs)
-        dados["form"].fields["ordemServico"].queryset = OrdemServico.objects.filter(
-            usuario=self.request.user)
-        return dados
 
 
 class TipoUpdate(LoginRequiredMixin, GroupRequiredMixin, UpdateView):
@@ -194,10 +131,7 @@ class TipoUpdate(LoginRequiredMixin, GroupRequiredMixin, UpdateView):
     success_url = reverse_lazy('listar-tipo')
     group_required = u"Administrador"
 
-    def get_object(self, queryset=None):
-        self.object = get_object_or_404(
-            Tipo, pk=self.kwargs['pk'], usuario=self.request.user)
-        return self.object
+
 
 
 # =##############
@@ -207,10 +141,7 @@ class TipoDelete(LoginRequiredMixin, GroupRequiredMixin, DeleteView):
     sucess_url = reverse_lazy('listar-tipo')
     group_required = u"Administrador"
 
-    def get_object(self, queryset=None):
-        self.object = get_object_or_404(
-            Tipo, pk=self.kwargs['pk'], usuario=self.request.user)
-        return self.object
+
 
 
 class EquipamentoDelete(LoginRequiredMixin, GroupRequiredMixin, DeleteView):
@@ -219,22 +150,23 @@ class EquipamentoDelete(LoginRequiredMixin, GroupRequiredMixin, DeleteView):
     success_url = reverse_lazy('listar-equipamento')
     group_required = u"Administrador"
 
+
+
+class OrdemServicoUsusarioDelete(LoginRequiredMixin, DeleteView):
+    model = OrdemServico
+    template_name = 'paginas/form-delete.html'
+    success_url = reverse_lazy('listar-ordemServico')
+
     def get_object(self, queryset=None):
         self.object = get_object_or_404(
-            Equipamento, pk=self.kwargs['pk'], usuario=self.request.user)
+            OrdemServico, pk=self.kwargs['pk'], usuario=self.request.user)
         return self.object
-
 
 class OrdemServicoDelete(LoginRequiredMixin, GroupRequiredMixin, DeleteView):
     model = OrdemServico
     template_name = 'paginas/form-delete.html'
     success_url = reverse_lazy('listar-ordemServico')
     group_required = u"Administrador"
-
-    def get_object(self, queryset=None):
-        self.object = get_object_or_404(
-            OrdemServico, pk=self.kwargs['pk'], usuario=self.request.user)
-        return self.object
 
 
 class CidadeDelete(LoginRequiredMixin, GroupRequiredMixin, DeleteView):
@@ -243,10 +175,6 @@ class CidadeDelete(LoginRequiredMixin, GroupRequiredMixin, DeleteView):
     success_url = reverse_lazy('listar-cidade')
     group_required = u"Administrador"
 
-    def get_object(self, queryset=None):
-        self.object = get_object_or_404(
-            Cidade, pk=self.kwargs['pk'], usuario=self.request.user)
-        return self.object
 
 
 class PessoaDelete(LoginRequiredMixin, GroupRequiredMixin, DeleteView):
@@ -255,20 +183,12 @@ class PessoaDelete(LoginRequiredMixin, GroupRequiredMixin, DeleteView):
     success_url = reverse_lazy('listar-pessoa')
     group_required = u"Administrador"
 
-    def get_object(self, queryset=None):
-        self.object = get_object_or_404(
-            Pessoa, pk=self.kwargs['pk'], usuario=self.request.user)
-        return self.object
-
 
 class TipoList(LoginRequiredMixin, GroupRequiredMixin, ListView):
     model = Tipo
     template_name = 'paginas/listas/tipo.html'
     group_required = u"Administrador"
 
-    def get_queryset(self):
-        self.object_list = Tipo.objects.filter(usuario=self.request.user)
-        return self.object_list
 
 
 class EquipamentoList(LoginRequiredMixin, GroupRequiredMixin, ListView):
@@ -276,15 +196,17 @@ class EquipamentoList(LoginRequiredMixin, GroupRequiredMixin, ListView):
     template_name = 'paginas/listas/equipamento.html'
     group_required = u"Administrador"
 
-    def get_queryset(self):
-        self.object_list = Equipamento.objects.filter(usuario=self.request.user)
-        return self.object_list
 
 
 class OrdemServicoList(LoginRequiredMixin, GroupRequiredMixin, ListView):
     model = OrdemServico
     template_name = 'paginas/listas/ordemServico.html'
     group_required = u"Administrador"
+
+
+class OrdemServicoUsuarioList(LoginRequiredMixin, ListView):
+    model = OrdemServico
+    template_name = 'paginas/listas/ordemServico.html'
 
     def get_queryset(self):
         self.object_list = OrdemServico.objects.filter(usuario=self.request.user)
@@ -296,19 +218,11 @@ class CidadeList(LoginRequiredMixin, GroupRequiredMixin, ListView):
     template_name = 'paginas/listas/cidade.html'
     group_required = u"Administrador"
 
-    def get_queryset(self):
-        self.object_list = Cidade.objects.filter(usuario=self.request.user)
-        return self.object_list
-
 
 class PessoaList(LoginRequiredMixin, GroupRequiredMixin, ListView):
     model = Pessoa
     template_name = 'paginas/listas/pessoa.html'
     group_required = u"Administrador"
-
-    def get_queryset(self):
-        self.object_list = Pessoa.objects.filter(usuario=self.request.user)
-        return self.object_list
 
 
 class PaginaInicialView(TemplateView):
