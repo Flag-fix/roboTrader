@@ -4,8 +4,8 @@
 
 {% block conteudo %}
 
-<h1 class="mt-4">Lista de atividades</h1>
-<a href="{% url 'cadastrar-atividade' %}" class="btn btn-primary float-right ms-5">Cadastrar atividade</a>
+<h1 class="mt-4">Lista de Equipamentos</h1>
+<a href="{% url 'cadastrar-equipamento' %}" class="btn btn-primary float-right ms-5">Cadastrar Equipamento</a>
 <hr>
 <table class="table table-striped">
 
@@ -14,28 +14,26 @@
             <th>
                 
             </th>
-            <th>Titulo</th>
-            <th>Data Entrega</th>
+            <th>Nome Equipamento</th>
+            <th>Data Entrada</th>
             <th>Status</th>
-            <th>Urgente</th>
             <th>Descrição</th>
-            <th>Setor</th>
+            <th>Tipo Equipamento</th>
         </tr>
     </thead>
 
     <tbody>
         {% for obj in object_list %}
             <tr>
-                <td>{{obj.titulo}}</td>
-                <td>{{obj.data_entrega}}</td>
+                <td>{{obj.nome_equipamento}}</td>
+                <td>{{obj.data_entrada}}</td>
                 <td>{{obj.status}}</td>
-                <td>{{obj.is_urgente}}</td>
                 <td>{{obj.descricao}}</td>
-                <td>{{obj.setor}}</td>
+                <td>{{obj.tipo_equipamento}}</td>
                 <td>
-                    <a href="{% url 'editar-atividade' obj.pk %}" class="btn btn-warning">
+                    <a href="{% url 'editar-equipamento' obj.pk %}" class="btn btn-warning">
                         Editar</a>
-                    <a href="{% url 'excluir-atividade' obj.pk %}" class="btn btn-danger">
+                    <a href="{% url 'excluir-equipamento' obj.pk %}" class="btn btn-danger">
                         Excluir</a>
                 </td>
             </tr>

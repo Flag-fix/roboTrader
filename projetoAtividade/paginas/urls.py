@@ -1,39 +1,36 @@
 from django.urls import path
-from .views import index, SetorCreate, CidadeCreate, PessoaCreate, DemandaCreate, AtividadeCreate
-from .views import SetorUpdate,CidadeUpdate,PessoaUpdate,DemandaUpdate,AtividadeUpdate
-from .views import SetorDelete,CidadeDelete,PessoaDelete, DemandaDelete, AtividadeDelete
-from .views import SetorList,CidadeList,PessoaList, DemandaList,AtividadeList
+from .views import index, OrdemServicoCreate, CidadeCreate, PessoaCreate, TipoCreate, EquipamentoCreate
+from .views import OrdemServicoUpdate, CidadeUpdate, PessoaUpdate, TipoUpdate, EquipamentoUpdate
+from .views import OrdemServicoDelete, CidadeDelete, PessoaDelete, TipoDelete, EquipamentoDelete
+from .views import OrdemServicoList, CidadeList, PessoaList, TipoList, EquipamentoList
 
 urlpatterns = [
 
     path('cadastrar/cidade/', CidadeCreate.as_view(), name='cadastrar-cidade'),
-    path('cadastrar/setor/', SetorCreate.as_view(), name='cadastrar-setor'),
+    path('cadastrar/ordemServico/', OrdemServicoCreate.as_view(), name='cadastrar-ordemServico'),
     path('cadastrar/pessoa/', PessoaCreate.as_view(), name='cadastrar-pessoa'),
-    path('cadastrar/demanda/', DemandaCreate.as_view(), name='cadastrar-demanda'),
-    path('cadastrar/atividade/', AtividadeCreate.as_view(), name='cadastrar-atividade'),
+    path('cadastrar/tipo/', TipoCreate.as_view(), name='cadastrar-tipo'),
+    path('cadastrar/equipamento/', EquipamentoCreate.as_view(), name='cadastrar-equipamento'),
 
     path('editar/cidade/<int:pk>/', CidadeUpdate.as_view(), name='editar-cidade'),
-    path('editar/setor/<int:pk>/', SetorUpdate.as_view(), name='editar-setor'),
+    path('editar/ordemServico/<int:pk>/', OrdemServicoUpdate.as_view(), name='editar-ordemServico'),
     path('editar/pessoa/<int:pk>/', PessoaUpdate.as_view(), name='editar-pessoa'),
-    path('editar/demanda/<int:pk>/', DemandaUpdate.as_view(), name='editar-demanda'),
-    path('editar/atividade/<int:pk>/', AtividadeUpdate.as_view(), name='editar-atividade'),
+    path('editar/tipo/<int:pk>/', TipoUpdate.as_view(), name='editar-tipo'),
+    path('editar/equipamento/<int:pk>/', EquipamentoUpdate.as_view(), name='editar-equipamento'),
 
     path('excluir/cidade/<int:pk>/', CidadeDelete.as_view(), name='excluir-cidade'),
-    path('excluir/setor/<int:pk>/', SetorDelete.as_view(), name='excluir-setor'),
+    path('excluir/ordemServico/<int:pk>/', OrdemServicoDelete.as_view(), name='excluir-ordemServico'),
     path('excluir/pessoa/<int:pk>/', PessoaDelete.as_view(), name='excluir-pessoa'),
-    path('excluir/demanda/<int:pk>/',
-         DemandaDelete.as_view(), name='excluir-demanda'),
-    path('excluir/atividade/<int:pk>/',
-         AtividadeDelete.as_view(), name='excluir-atividade'),
-
+    path('excluir/tipo/<int:pk>/',
+         TipoDelete.as_view(), name='excluir-tipo'),
+    path('excluir/equipamento/<int:pk>/',
+         EquipamentoDelete.as_view(), name='excluir-equipamento'),
 
     path('listar/cidade/', CidadeList.as_view(), name='listar-cidade'),
-    path('listar/setor/', SetorList.as_view(), name='listar-setor'),
+    path('listar/ordemServico/', OrdemServicoList.as_view(), name='listar-ordemServico'),
     path('listar/pessoa/', PessoaList.as_view(), name='listar-pessoa'),
-    path('listar/demanda/', DemandaList.as_view(), name='listar-demanda'),
-    path('listar/atividade/', AtividadeList.as_view(), name='listar-atividade'),
-
-
+    path('listar/tipo/', TipoList.as_view(), name='listar-tipo'),
+    path('listar/equipamento/', EquipamentoList.as_view(), name='listar-equipamento'),
 
     path('', index.as_view(), name='index'),
 ]
