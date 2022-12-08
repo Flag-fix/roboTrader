@@ -29,6 +29,12 @@
                 <td>{{obj.equipamento}}</td>
                 <td>{{obj.status}}</td>
 
+                {% if obj.data_final|filtroDataFinal %}
+                <td class="text-success">{{obj.data_final}}</td>
+                {% else %}
+                <td class="text-danger">{{obj.data_final}}</td>
+                {% endif %}
+
                 <td>
                     <a href="{% url 'editar-ordemServico' obj.pk %}" class="btn btn-warning">
                         Editar</a>
